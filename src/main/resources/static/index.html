@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Demo</title>
+</head>
+<body>
+<h2>Server-Sent Events (SSE) Example</h2>
+<div id="output"></div>
+
+<script>
+        // Connect to SSE endpoint
+        const eventSource = new EventSource("http://localhost:8080/sse/events");
+
+        // Listen for messages
+        eventSource.onmessage = (event) => {
+            const output = document.getElementById("output");
+            const newElement = document.createElement("p");
+            newElement.textContent = "Received: " + event.data;
+            output.appendChild(newElement);
+        };
+
+        // Handle errors
+        eventSource.onerror = (error) => {
+            console.error("SSE Error:", error);
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>
